@@ -10,6 +10,8 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	/** fields: size of the Heap and its comparator */
 	private int size;
 	private Comparator<P> heapComp;
+	
+	/** heapArray stores the heap nodes; locMap maps each node to its location */ 
 	private ArrayList<E> heapArray = new ArrayList<E>();
 	private HashMap<E, Integer> locMap = new HashMap<E, Integer>();
 	
