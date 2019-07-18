@@ -24,16 +24,12 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	/** return the comparator used for ordering priorities */
 	@Override
 	public Comparator<? super P> comparator() {
-		// TODO Auto-generated method stub
-		//return null;
 		return this.heapComp;
 	}
 	
 	/** Return the number of elements in this.  Runs in O(1) time. */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		//return 0;
 		return this.size;
 	}
 	
