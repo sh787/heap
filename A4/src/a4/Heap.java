@@ -1,13 +1,17 @@
 package a4;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
+import java.util.HashMap;
 
 public class Heap<E, P> implements PriorityQueue<E,P>{
 	
 	/** fields: size of the Heap and its comparator */
 	private int size;
 	private Comparator<P> heapComp;
+	private ArrayList<E> heapArray = new ArrayList<E>();
+	private HashMap<E, Integer> locMap = new HashMap<E, Integer>();
 	
 	/** constructor creates an empty heap with the given comparator */
 	public Heap(Comparator<P> c) {
