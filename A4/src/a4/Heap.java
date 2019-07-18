@@ -33,6 +33,18 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 		return this.size;
 	}
 	
+	/** Returns the left node of the parent from heapArray */
+	public E getLeft(E parent) {
+		int leftIndex = 2*(heapArray.indexOf(parent)) + 1;
+		return heapArray.get(leftIndex);
+	}
+	
+	/** Returns the right node of the parent from heapArray */
+	public E getRight(E parent) {
+		int rightIndex = 2*(heapArray.indexOf(parent)) + 2;
+		return heapArray.get(rightIndex);
+	}
+	
 	/**
 	 * Remove and return the largest element of this, according to comparator()
 	 * Runs in O(log n) time.
