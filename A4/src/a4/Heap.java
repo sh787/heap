@@ -53,8 +53,7 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public E peek() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.heapArray.get(0);
 	}
 	
 	/**
