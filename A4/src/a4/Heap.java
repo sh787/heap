@@ -7,12 +7,39 @@ import java.util.HashMap;
 
 public class Heap<E, P> implements PriorityQueue<E,P>{
 	
-	/** fields: size of the Heap and its comparator */
+	/** A node consists of an element E and its priority P. */
+	public class Node {
+		private E element;
+		private P priority;
+		
+		public Node(E elt, P prt) {
+			this.element = elt;
+			this.priority = prt;
+		}
+		
+		public E getElement() {
+			return this.element;
+		}
+		
+		public void setElement(E elt) {
+			this.element = elt;
+		}
+		
+		public P getPriority() {
+			return this.priority;
+		}
+		
+		public void setPriority(P prt) {
+			this.priority = prt;
+		}
+	}
+	
+	/** Fields: size of the Heap and its comparator. */
 	private int size;
 	private Comparator<P> heapComp;
 	
 	/** heapArray stores the heap nodes; locMap maps each node to its location */ 
-	private ArrayList<E> heapArray = new ArrayList<E>();
+	private ArrayList<Node> heapArray = new ArrayList<Node>();
 	private HashMap<E, Integer> locMap = new HashMap<E, Integer>();
 	
 	/** constructor creates an empty heap with the given comparator */
@@ -34,19 +61,19 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	}
 	
 	/** Returns the left node of the parent from heapArray */
-	public E getLeft(E parent) {
+	public Node getLeft(E parent) {
 		int leftIndex = 2*(heapArray.indexOf(parent)) + 1;
 		return heapArray.get(leftIndex);
 	}
 	
 	/** Returns the right node of the parent from heapArray */
-	public E getRight(E parent) {
+	public Node getRight(E parent) {
 		int rightIndex = 2*(heapArray.indexOf(parent)) + 2;
 		return heapArray.get(rightIndex);
 	}
 	
 	/** Returns the parent node of the child from heapArray */
-	public E getParent(E child) {
+	public Node getParent(E child) {
 		if (heapArray.indexOf(child)%2 != 0) {
 			int parentLeftIndex = (heapArray.indexOf(child) - 1)/2;
 			return heapArray.get(parentLeftIndex);
@@ -76,7 +103,7 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public E peek() throws NoSuchElementException {
-		return this.heapArray.get(0);
+		return this.heapArray.get(0).getElement(); //.get elt
 	}
 	
 	/**
