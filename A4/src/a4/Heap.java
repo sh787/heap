@@ -8,11 +8,11 @@ import java.util.HashMap;
 public class Heap<E, P> implements PriorityQueue<E,P>{
 	
 	/** A node consists of an element E and its priority P. */
-	public class Node {
+	private class Node {
 		private E element;
 		private P priority;
 		
-		public Node(E elt, P prt) {
+		private Node(E elt, P prt) {
 			this.element = elt;
 			this.priority = prt;
 		}
@@ -40,12 +40,13 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	
 	/** heapArray stores the heap nodes; locMap maps each node to its location */ 
 	private ArrayList<Node> heapArray = new ArrayList<Node>();
-	private HashMap<E, Integer> locMap = new HashMap<E, Integer>();
+	private HashMap<E, Integer> locMap;
 	
 	/** constructor creates an empty heap with the given comparator */
 	public Heap(Comparator<P> c) {
 		this.size = 0;
 		this.heapComp = c;
+		this.locMap = new HashMap<E, Integer>();
 	}
 	
 	/** return the comparator used for ordering priorities */
