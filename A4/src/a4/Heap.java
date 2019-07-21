@@ -123,6 +123,11 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public E poll() throws NoSuchElementException {
+		
+		if (this.size == 0) {
+			throw new NoSuchElementException();
+		}
+		
 		// Save largest element.
 		Node first = heapArray.get(0);
 		
@@ -132,7 +137,7 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 		
 		// Swap root with its children if they are ranked before in priority.
 		// Choose the highest ranking in priority (lower Priority value) to swap.
-		swapPriorityChild(first);
+		swapLargerChild(first);
 		
 		// Decrement size, update location Map
 		this.size --;
@@ -142,7 +147,7 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	}
 	
 	/** Helper function which swaps Node n with the lower priority value of its two children */
-	public void swapPriorityChild(Node n) {
+	public void swapLargerChild(Node n) {
 		// Remember to update location map
 		P nPriority = n.getPriority();
 		P leftPriority = getLeft(n.getElement()).getPriority();
@@ -151,12 +156,12 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 		if (heapComp.compare(leftPriority, rightPriority) > 0 ) {
 			if (heapComp.compare(nPriority, rightPriority) > 0) {
 				swapNode(n, getRight(n.getElement()));
-				swapPriorityChild(n);
+				swapLargerChild(n);
 			}
 		} 	else if (heapComp.compare(leftPriority, rightPriority) < 0 ) {
 			if (heapComp.compare(n.getPriority(), leftPriority) > 0) {
 				swapNode(n, getRight(n.getElement()));
-				swapPriorityChild(n);
+				swapLargerChild(n);
 			}
 		} 
 	}
@@ -169,6 +174,10 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public E peek() throws NoSuchElementException {
+		if (this.size == 0) {
+			throw new NoSuchElementException();
+		}
+		
 		return this.heapArray.get(0).getElement(); //.get elt
 	}
 	
@@ -182,6 +191,10 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public void add(E e, P p) throws IllegalArgumentException {
+		if (location.containsKey(e)) {
+			throw new IllegalArgumentException();
+		}
+		
 		// generate new node with e, p
 		Node addition = new Node(e, p);
 		
