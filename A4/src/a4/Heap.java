@@ -66,23 +66,43 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	/** Returns the left node of the parent from heapArray */
 	public Node getLeft(E parent) {
 		int leftIndex = 2*location.get(parent) + 1;
-		return heapArray.get(leftIndex);
+		
+		if (leftIndex < this.size) {
+			return heapArray.get(leftIndex);
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/** Returns the right node of the parent from heapArray */
 	public Node getRight(E parent) {
 		int rightIndex = 2*location.get(parent) + 2;
-		return heapArray.get(rightIndex);
+		
+		if (rightIndex < this.size) {
+			return heapArray.get(rightIndex);
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/** Returns the parent node of the child from heapArray */
 	public Node getParent(E child) {
 		if (location.get(child)%2 != 0) {
 			int parentLeftIndex = (location.get(child) - 1)/2;
-			return heapArray.get(parentLeftIndex);
+			if (parentLeftIndex >= 0) {
+				return heapArray.get(parentLeftIndex);
+			} else {
+				return null;
+			}
 		} else {
 			int parentRightIndex = (location.get(child) - 2)/2;
-			return heapArray.get(parentRightIndex);
+			if (parentRightIndex >= 0) {
+				return heapArray.get(parentRightIndex);
+			} else {
+				return null;
+			}
 		}
 	}
 	
