@@ -173,6 +173,7 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 		P leftPriority = getLeft(n.getElement()).getPriority();
 		P rightPriority = getRight(n.getElement()).getPriority();
 		
+		//if both not null
 		if (heapComp.compare(leftPriority, rightPriority) > 0 ) {
 			if (heapComp.compare(nPriority, rightPriority) > 0) {
 				swapNode(n, getRight(n.getElement()));
@@ -184,6 +185,12 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 				swapLargerChild(n);
 			}
 		} 
+		
+		// if one null
+		
+		// if other null
+		
+		// if both null
 	}
 	
 	/**
