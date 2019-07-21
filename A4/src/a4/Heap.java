@@ -238,11 +238,6 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 		} 
 	}
 
-   /* private int compare(P priority, P priority2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}*/
-
 	/**
 	 * Change the priority associated with e to p.
 	 *
