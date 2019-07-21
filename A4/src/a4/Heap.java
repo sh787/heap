@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Heap<E, P> implements PriorityQueue<E,P>{
 	
@@ -39,14 +41,14 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	private Comparator<P> heapComp;
 	
 	/** heapArray stores the heap nodes; locMap maps each node to its location */ 
-	private ArrayList<Node> heapArray = new ArrayList<Node>();
-	private HashMap<E, Integer> locMap;
+	private List<Node> heapArray = new ArrayList<Node>();
+	private Map<E, Integer> location;
 	
 	/** constructor creates an empty heap with the given comparator */
 	public Heap(Comparator<P> c) {
 		this.size = 0;
 		this.heapComp = c;
-		this.locMap = new HashMap<E, Integer>();
+		this.location = new HashMap<E, Integer>();
 	}
 	
 	/** return the comparator used for ordering priorities */
@@ -63,25 +65,54 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	
 	/** Returns the left node of the parent from heapArray */
 	public Node getLeft(E parent) {
-		int leftIndex = 2*(heapArray.indexOf(parent)) + 1;
+		int leftIndex = 2*location.get(parent) + 1;
 		return heapArray.get(leftIndex);
 	}
 	
 	/** Returns the right node of the parent from heapArray */
 	public Node getRight(E parent) {
-		int rightIndex = 2*(heapArray.indexOf(parent)) + 2;
+		int rightIndex = 2*location.get(parent) + 2;
 		return heapArray.get(rightIndex);
 	}
 	
 	/** Returns the parent node of the child from heapArray */
 	public Node getParent(E child) {
-		if (heapArray.indexOf(child)%2 != 0) {
-			int parentLeftIndex = (heapArray.indexOf(child) - 1)/2;
+		if (location.get(child)%2 != 0) {
+			int parentLeftIndex = (location.get(child) - 1)/2;
 			return heapArray.get(parentLeftIndex);
 		} else {
-			int parentRightIndex = (heapArray.indexOf(child) - 2)/2;
+			int parentRightIndex = (location.get(child) - 2)/2;
 			return heapArray.get(parentRightIndex);
 		}
+	}
+	
+	/** Helper function that can be used to swap nodes in the heap if two nodes are known */
+	private void swapNode(Node n1, Node n2) {
+		int indexOf1 = heapArray.indexOf(n1);
+		int indexOf2 = heapArray.indexOf(n2);
+		
+		Node temp = heapArray.get(indexOf1);
+		
+		heapArray.set(indexOf1, heapArray.get(indexOf2));
+		heapArray.set(indexOf2, temp);
+		
+		//update index in location map
+		location.put(n1.getElement(), indexOf2);
+		location.put(n2.getElement(), indexOf1);
+	}
+	
+	/** Helper function that can be used to swap nodes in the heap if two nodes' indexes are known */
+	private void swapIndex(int indexOf1, int indexOf2) {
+		
+		Node temp = heapArray.get(indexOf1);
+		
+		heapArray.set(indexOf1, heapArray.get(indexOf2));
+		heapArray.set(indexOf2, temp);
+		
+		//update index in location map
+		
+		location.put(heapArray.get(indexOf2).getElement(), indexOf1);
+		location.put(temp.getElement(), indexOf2);
 	}
 	
 	/**
@@ -92,8 +123,42 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public E poll() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		// Save largest element.
+		Node first = heapArray.get(0);
+		
+		// Set first element (root) in heap to temporarily be the last element (last leaf).
+		swapIndex(0, heapArray.size()-1);
+		heapArray.remove(heapArray.size()-1);
+		
+		// Swap root with its children if they are ranked before in priority.
+		// Choose the highest ranking in priority (lower Priority value) to swap.
+		swapPriorityChild(first);
+		
+		// Decrement size, update location Map
+		this.size --;
+		
+		// Return element of root.
+		return first.getElement();
+	}
+	
+	/** Helper function which swaps Node n with the lower priority value of its two children */
+	public void swapPriorityChild(Node n) {
+		// Remember to update location map
+		P nPriority = n.getPriority();
+		P leftPriority = getLeft(n.getElement()).getPriority();
+		P rightPriority = getRight(n.getElement()).getPriority();
+		
+		if (heapComp.compare(leftPriority, rightPriority) > 0 ) {
+			if (heapComp.compare(nPriority, rightPriority) > 0) {
+				swapNode(n, getRight(n.getElement()));
+				swapPriorityChild(n);
+			}
+		} 	else if (heapComp.compare(leftPriority, rightPriority) < 0 ) {
+			if (heapComp.compare(n.getPriority(), leftPriority) > 0) {
+				swapNode(n, getRight(n.getElement()));
+				swapPriorityChild(n);
+			}
+		} 
 	}
 	
 	/**
@@ -117,9 +182,33 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public void add(E e, P p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// generate new node with e, p
+		Node addition = new Node(e, p);
+		
+		// append new node to the end of heapArray
+		heapArray.add(addition);
+		
+		// increment size
+		this.size ++;
+		
+		// swap with parent until invariant is restored.
+		swapWithParent(addition);
 		
 	}
+	
+	/** Helper function that swaps Node n with its parent if n is higher ranking (lower value) in priority. */
+	public void swapWithParent(Node n) {
+		// Remember to update location map
+		if (heapComp.compare(n.getPriority(), getParent(n.getElement()).getPriority()) >= 0 ) {
+			swapNode(n, getParent(n.getElement()));	
+			swapWithParent(n);
+		} 
+	}
+
+   /* private int compare(P priority, P priority2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}*/
 
 	/**
 	 * Change the priority associated with e to p.
@@ -128,7 +217,11 @@ public class Heap<E, P> implements PriorityQueue<E,P>{
 	 */
 	@Override
 	public void changePriority(E e, P p) throws NoSuchElementException {
-		// TODO Auto-generated method stub
+		// get node with E e from heapArray using location Map
+		
+		// set priority
+		
+		// swap and update location Map if necessary
 		
 	}
 
