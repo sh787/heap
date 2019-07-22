@@ -6,8 +6,6 @@ import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
-import a4.Heap.Node;
-
 class HeapTest {
 
 	@Test
@@ -23,6 +21,7 @@ class HeapTest {
 	
 	@Test
 	void testSize() {
+		//test 1: Heap<Integer, Integer> h, basic tests
 		Comparator<Integer> c = (int1, int2) -> {return int1 - int2;};
 		Heap<Integer,Integer> h = new Heap<Integer,Integer>(c);
 		h.add(1, 2);
@@ -37,6 +36,7 @@ class HeapTest {
 	
 	@Test
 	void testPoll() {
+		//test 1: Heap<Integer, Integer> h, basic tests
 		Comparator<Integer> c = (int1, int2) -> {return int1 - int2;};
 		Heap<Integer,Integer> h = new Heap<Integer,Integer>(c);
 		h.add(1, 1);
@@ -56,6 +56,7 @@ class HeapTest {
 	
 	@Test
 	void testPeek() {
+		//test 1: Heap<Integer, Integer> h, basic tests
 		Comparator<Integer> c = (int1, int2) -> {return int1 - int2;};
 		Heap<Integer,Integer> h = new Heap<Integer,Integer>(c);
 		h.add(1, 1);
@@ -65,6 +66,7 @@ class HeapTest {
 	
 	@Test
 	void testAdd() {
+		//test 1: Heap<Integer, Integer> h, basic tests
 		Comparator<Integer> c = (int1, int2) -> {return int1 - int2;};
 		Heap<Integer,Integer> h = new Heap<Integer,Integer>(c);
 		h.add(1, 2);
@@ -77,6 +79,7 @@ class HeapTest {
 	
 	@Test
 	void testChangePriority() {
+		//test 1: Heap<Integer, Integer> h, basic tests
 		Comparator<Integer> c = (int1, int2) -> {return int1 - int2;};
 		Heap<Integer,Integer> h = new Heap<Integer,Integer>(c);
 		h.add(1, 2);
@@ -90,6 +93,26 @@ class HeapTest {
 		System.out.println("Element removed: " + h.poll());
 		System.out.println("Element removed: " + h.poll());
 		System.out.println("Element removed: " + h.poll());
+		//test 2: Heap<Character, Integer> h2, basic tests
+		Comparator<Character> c2 = (char1, char2) -> {return char1 - char2;};
+		Heap<Character,Integer> h2 = new Heap<Character,Integer>(c);
+		h2.add('a', 0);
+		h2.add('b', 1);
+		h2.add('c', 2);
+		h2.add('d', 3);
+		h2.add('e', 4);
+		h2.add('f', 5);
+		h2.add('g', 6);
+		h2.add('h', 7);
+		h2.add('i', 8);
+		System.out.println("changePriority: Size h2 after adding: " + h2.size());
+		h2.add('j', 0);
+		h2.add('k', 0);
+		System.out.println("changePriority: Size h2 after adding: " + h2.size());
+		System.out.println("First element: " + h2.peek());
+		System.out.println("Element removed: " + h2.poll());
+		System.out.println("Element removed: " + h2.poll());
+		System.out.println("Element removed: " + h2.poll());
 	}
 
 }
