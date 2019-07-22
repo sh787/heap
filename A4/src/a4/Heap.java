@@ -198,14 +198,7 @@ public class Heap<E, P> implements PriorityQueue<E,P> {
 						swapLargerChild(n);
 					}
 				} 
-		//if left null
-		} else if (getLeft(n.getElement()) == null && getRight(n.getElement()) != null) {
-			P rightPriority = getRight(n.getElement()).getPriority();
-			if (heapComp.compare(nPriority, rightPriority) < 0) {
-				swapNode(n, getRight(n.getElement()));
-				swapLargerChild(n);
-			}
-		//if right null
+		//if right null (left cannot be null while right is not null - must be full tree)
 		} else if (getLeft(n.getElement()) != null && getRight(n.getElement()) == null) {
 			P leftPriority = getLeft(n.getElement()).getPriority();
 			if (heapComp.compare(nPriority, leftPriority) < 0) {
@@ -263,7 +256,6 @@ public class Heap<E, P> implements PriorityQueue<E,P> {
 	
 	/** Helper function that swaps Node n with its parent if n is higher ranking (lower value) in priority. */
 	private void swapWithParent(Node n) {
-		// Remember to update location map
 		P nPriority = n.getPriority();
 		
 		if (getParent(n.getElement()) != null) {
@@ -292,13 +284,12 @@ public class Heap<E, P> implements PriorityQueue<E,P> {
 		Node change = heapArray.get(location.get(e));
 		change.setPriority(p);
 		
+		// swap and update location Map if necessary
 		if (this.size > 1) {
 			swapWithParent(change);
 			swapLargerChild(change);
 			
 		}
-		
-		// swap and update location Map if necessary
 		
 	}
 
