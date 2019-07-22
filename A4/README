@@ -1,9 +1,29 @@
 This project contains the Heap, the implementation of the PriorityQueue.
 
 The Heap is a specialized binary tree-based data structure. In this particular heap, 
-each element E is associated with a priority P. Priority is considered in increasing order
-according to its comparator: for example, for a typical natural order integer comparator, 
-an item with priority of 1 comes before an item of priority 2.
+each element E is associated with a priority P. Priority is considered in decreasing order
+according to its comparator: for example, for a typical numeric order integer comparator, 
+an item with priority of 2 comes before an item of priority 1.
 
 The Heap's methods are:
+
+Heap(Comparator<P> c): The constructor creates an empty heap with the given comparator.
+
+comparator(): Returns the comparator used for ordering priorities.
+
+size(): Returns the number of elements in the heap.  Runs in O(1) time.
+
+poll(): Removes and returns the largest priority element of the heap, according to the comparator.
+	  	Throws NoSuchElementException if the heap is empty.
+	  	
+peek(): Returns the largest priority element of the heap, according to the comparator.
+		Does not remove the element from the heap.
+		Throws NoSuchElementException if the heap is empty.
+		
+add(E e, P p): Adds the element e with priority p to the heap.
+				Throws IllegalArgumentException if the heap contains an element that is equal to e.
+				
+changePriority(E e, P p): Changes the priority associated with e to p.
+						Throws NoSuchElementException if the heap does not contain e.
+
 
