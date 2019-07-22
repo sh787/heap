@@ -187,13 +187,13 @@ public class Heap<E, P> implements PriorityQueue<E,P> {
 		if ((getLeft(n.getElement()) != null) && (getRight(n.getElement()) != null)) {
 				P leftPriority = getLeft(n.getElement()).getPriority();
 				P rightPriority = getRight(n.getElement()).getPriority();
-				if (heapComp.compare(leftPriority, rightPriority) > 0 ) {
-					if (heapComp.compare(nPriority, rightPriority) > 0) {
+				if (heapComp.compare(leftPriority, rightPriority) < 0 ) {
+					if (heapComp.compare(nPriority, rightPriority) < 0) {
 						swapNode(n, getRight(n.getElement()));
 						swapLargerChild(n);
 					}
-				} 	else if (heapComp.compare(rightPriority, leftPriority) > 0 ) {
-					if (heapComp.compare(nPriority, leftPriority) > 0) {
+				} 	else if (heapComp.compare(rightPriority, leftPriority) < 0 ) {
+					if (heapComp.compare(nPriority, leftPriority) < 0) {
 						swapNode(n, getLeft(n.getElement()));
 						swapLargerChild(n);
 					}
@@ -201,14 +201,14 @@ public class Heap<E, P> implements PriorityQueue<E,P> {
 		//if left null
 		} else if (getLeft(n.getElement()) == null && getRight(n.getElement()) != null) {
 			P rightPriority = getRight(n.getElement()).getPriority();
-			if (heapComp.compare(nPriority, rightPriority) > 0) {
+			if (heapComp.compare(nPriority, rightPriority) < 0) {
 				swapNode(n, getRight(n.getElement()));
 				swapLargerChild(n);
 			}
 		//if right null
 		} else if (getLeft(n.getElement()) != null && getRight(n.getElement()) == null) {
 			P leftPriority = getLeft(n.getElement()).getPriority();
-			if (heapComp.compare(nPriority, leftPriority) > 0) {
+			if (heapComp.compare(nPriority, leftPriority) < 0) {
 				swapNode(n, getLeft(n.getElement()));
 				swapLargerChild(n);
 			}
@@ -268,7 +268,7 @@ public class Heap<E, P> implements PriorityQueue<E,P> {
 		
 		if (getParent(n.getElement()) != null) {
 			P parentPriority = getParent(n.getElement()).getPriority();
-			if (heapComp.compare(nPriority, parentPriority) < 0 ) {
+			if (heapComp.compare(nPriority, parentPriority) > 0 ) {
 				swapNode(n, getParent(n.getElement()));	
 				swapWithParent(n);
 			} 

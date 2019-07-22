@@ -93,6 +93,7 @@ class HeapTest {
 		System.out.println("Element removed: " + h.poll());
 		System.out.println("Element removed: " + h.poll());
 		System.out.println("Element removed: " + h.poll());
+		System.out.println("changePriority: Size after changing: " + h.size());
 		//test 2: Heap<Character, Integer> h2, basic tests
 		Comparator<Character> c2 = (char1, char2) -> {return char1 - char2;};
 		Heap<Character,Integer> h2 = new Heap<Character,Integer>(c);
@@ -106,8 +107,8 @@ class HeapTest {
 		h2.add('h', 7);
 		h2.add('i', 8);
 		System.out.println("changePriority: Size h2 after adding: " + h2.size());
-		h2.add('j', 0);
-		h2.add('k', 0);
+		h2.add('j', 8);
+		h2.add('k', 8);
 		System.out.println("changePriority: Size h2 after adding: " + h2.size());
 		System.out.println("First element: " + h2.peek());
 		System.out.println("Element removed: " + h2.poll());
