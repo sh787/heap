@@ -1,7 +1,7 @@
 This project contains the Heap, the implementation of the PriorityQueue.
 
 The Heap is a specialized binary tree-based data structure. In this particular heap, 
-each element E is associated with a priority P. Priority is considered in decreasing order
+each element E is associated with a priority P. Priority is considered higher-to-lower
 according to its comparator: for example, for a typical numeric order integer comparator, 
 an item with priority of 2 comes before an item of priority 1.
 

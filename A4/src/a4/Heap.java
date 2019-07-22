@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * The Heap is a specialized binary tree-based data structure. In this particular heap, 
- * each element E is associated with a priority P. Priority is considered higher-value-first
+ * each element E is associated with a priority P. Priority is considered higher-to-lower
  * according to its comparator: for example, for a typical numeric order integer comparator, 
  * an item with priority of 2 comes before an item of priority 1.
  *
