@@ -13,8 +13,8 @@ import java.util.Map;
  * according to its comparator: for example, for a typical numeric order integer comparator, 
  * an item with priority of 2 comes before an item of priority 1.
  *
- * @param <E>
- * @param <P>
+ * @param <E> element
+ * @param <P> priority
  */
 public class Heap<E, P> implements PriorityQueue<E,P> {
 	
